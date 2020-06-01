@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Patients Predictor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="jumbotron bg-info">
+        <div class="container">
+            <div class="col 12 m10 offset-ml center">
+                <h1 class="display-4">Liver Patients Predictor</h1>
+                <p class="lead">Machine Learning web App</p>
+                <hr class="my-4">
+                <a class="btn btn-warning btn-lg" href="{{ url_for('index')}}" role="button">Reset</a>
+                <a class="btn btn-warning btn-lg " href="{{ url_for('view')}}" role="button">View Dataset</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Input Prediction Details
+                        </div>
+                        <div class="card-body">
+                            <form action="{{url_for('analyze')}}" method="post" class="validate">
+                                <div class="form-group">
+                                    <label>Age</label>
+                                    <input type="number" class="form-control" id="age" name="age" required>
+                                </div>
+                                <label>Gender </label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="gender" name="gender" value="0"
+                                        checked>
+                                    <label class="form-check-label">Female</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="gender" name="gender" value="1">
+                                    <label class="form-check-label">Male</label>
+                                </div>
+                                <div class="form-group">
+                                    <label>Total_Bilirubin</label>
+                                    <input type="number" step=0.1 class="form-control" id="Total_Bilirubin" name="Total_Bilirubin" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Direct_Bilirubin</label>
+                                    <input type="number" step=0.1 class="form-control" id="Direct_Bilirubin" name="Direct_Bilirubin" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Alkaline_Phosphotase</label>
+                                    <input type="number" class="form-control" id="Alkaline_Phosphotase" name="Alkaline_Phosphotase" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Alamine_Aminotransferase</label>
+                                    <input type="number" class="form-control" id="Alamine_Aminotransferase" name="Alamine_Aminotransferase" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Aspartate_Aminotransferase</label>
+                                    <input type="number" class="form-control" id="Aspartate_Aminotransferase" name="Aspartate_Aminotransferase" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Total_Protiens</label>
+                                    <input type="number" step=0.1 class="form-control" id="Total_Protiens" name="Total_Protiens" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Albumin</label>
+                                    <input type="number" step=0.1 class="form-control" id="Albumin" name="Albumin" required>
+                                </div>
+                                <div class="form-group">
+                                    <label>Albumin_and_Globulin_Ratio</label>
+                                    <input type="number" step=0.1 class="form-control" id="Albumin_and_Globulin_Ratio" name="Albumin_and_Globulin_Ratio" required>
+                                </div>
+                                <label>ML model</label>
+                                <select class="form-control form-control" name="model">
+                                    <option disabled selected>Select Model</option>
+                                    <option vlaue="lgmodel">Logistic Regression</option>
+                                    <option value="knnmodel">K Nerest Negbiour</option>
+                                    <option value="gboostmodel">Gradient Boost</option>
+                                </select>
+                                <br>
+                                <button type="submit" class="btn btn-primary">Predict</button>
+                                <button type="rest" class="btn btn-primary">Clear</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Prediction Data
+                        </div>
+                        <div class="card-body">
+                            <p>Age : {{age}}</p>
+                            {% if gender == '0' %}
+                            <p>Gender : Female</p>
+                            {% elif gender == '1' %}
+                            <p>Gender : Male</p>
+                            {% else %}
+                            <p>Gender: </p>
+                            {% endif %}
+
+                            <p>Total_Bilirubin: {{Total_Bilirubin}}</p>
+                           <p>Direct_Bilirubin: {{Direct_Bilirubin}}</p> 
+                            <p>Alkaline_Phosphotase: {{Alkaline_Phosphotase}}</p>
+                           <p>Alamine_Aminotransferase: {{Alamine_Aminotransferase}}</p>
+                           <p>Aspartate_Aminotransferase: {{Aspartate_Aminotransferase}}</p>
+                            <p>Total_Protiens: {{Total_Protiens}}</p>
+                            <p>Albumin: {{Albumin}}</p>
+                           <p>Albumin_and_Globulin_Ratio: {{Albumin_and_Globulin_Ratio}}</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-6 col-md-4">
+                    <div class="card">
+                        <div class="card-header">
+                            Prediction Result
+                        </div>
+                        <div class="card-body">
+                            <div class="card-image">
+                                {% if result_prediction == [1] %}
+                                <div class="alert alert-danger" role="alert">
+                                    High risk of being a liver patient!
+                                </div>
+                                <br>
+                                <img src="static/liver_patient.png" width="280px" height="200px">
+                                {% elif result_prediction == [2] %}
+                                <div class="alert alert-success" role="alert">
+                                    Low risk of being a liver patient!
+                                </div>
+                                <br>
+                                <img src="static/liver_not_patient.png" width="250px" height="200px">
+                                {% else %}
+                                <p></p>
+                                {% endif %}
+            
+                            </div>
+                        </div>
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

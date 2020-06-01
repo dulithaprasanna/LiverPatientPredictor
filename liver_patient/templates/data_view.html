@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liver Patients DataSet</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="jumbotron bg-info">
+        <div class="container">
+            <div class="col 12 m10 offset-ml center">
+                <h1 class="display-4">Liver Patients Predictor</h1>
+                <p class="lead">Machine Learning web App</p>
+                <hr class="my-4">
+                <a class="btn btn-warning btn-lg" href="{{ url_for('index')}}" role="button">Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {{data_view.columns|safe}}
+        <div class="table table-striped " style="overflow-x: auto;">
+
+            {{ data_view.to_html(classes = "table striped") | safe}}
+        </div>
+        
+    </div>
+</body>
+
+</html>
